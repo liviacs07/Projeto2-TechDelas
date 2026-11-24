@@ -26,7 +26,7 @@ estando diretamente alinhado ao **Objetivo de Desenvolvimento Sustentável núme
 
 ---
 
-##  Funcionalidades
+## ⚙️ Funcionalidades
 
 - **Página Principal (index.html):** Apresentação da missão, destaque para cursos de HTML, CSS e JavaScript, informações sobre a ODS 5, item de menu **Adm** e acesso aos currículos virtuais no rodapé.
 - **Página de Login e Cadastro (login.html):** Formulário completo com validação de campos obrigatórios (nome, e-mail, senha, telefone e área de interesse).
