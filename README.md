@@ -7,10 +7,10 @@
 
 ## 📌 Sumário
 - [Sobre o Projeto](#-sobre-o-projeto)
-- [Funcionalidades](#-funcionalidades)
+- [Funcionalidades](#funcionalidades)
 - [Estrutura do Projeto](#-estrutura-do-projeto)
 - [Validação do Projeto](#-validação-do-projeto)
-- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Como Visualizar o Projeto](#-como-visualizar-o-projeto)
 - [Integrantes da Equipe](#-integrantes-da-equipe)
 
