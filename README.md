@@ -47,6 +47,7 @@ O repositório está organizado da seguinte forma:
  ┃ ┣ 📂 validacao
  ┃ ┃ ┣ 📜 css.png
  ┃ ┃ ┣ 📜 index.png
+ ┃ ┃ ┣ 📜 adm.png
  ┃ ┃ ┗ 📜 login.png
  ┃ ┣ 📜 banner.png
  ┃ ┣ 📜 icon.png
