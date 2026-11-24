@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechDelas - Painel Administrativo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="imagens/icon.png" alt="Logotipo TechDelas" class="logo-img">
+            <h1>TechDelas - Adm</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="login.html">Login/Cadastro</a></li>
+                <li><a href="adm.html" class="btn-login btn-adm-ativo">Adm</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="adm-main">
+        <div class="adm-card">
+            <h2>Painel de Gestão de Usuários</h2>
+            <p class="adm-descricao">Cadastre novos usuários na plataforma. Os dados serão salvos localmente no navegador (Local Storage).</p>
+            
+            <div class="adm-form">
+                <div class="form-group">
+                    <label for="nomeAdm">Nome do Usuário:</label>
+                    <input type="text" id="nomeAdm" placeholder="Digite o nome completo" required>
+                </div>
+                <div class="form-group">
+                    <label for="emailAdm">E-mail:</label>
+                    <input type="email" id="emailAdm" placeholder="seu-email@exemplo.com" required>
+                </div>
+                <div class="adm-botoes">
+                    <button type="button" id="btnCadastrar" class="btn-acao">Cadastrar</button>
+                    <button type="button" id="btnLimpar" class="btn-acao btn-limpar">Limpar Campos</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="adm-card">
+            <h2>Usuários Cadastrados</h2>
+            
+            <div class="search-container">
+                <input type="text" id="inputPesquisa" placeholder="Pesquisar por nome ou e-mail...">
+                <button type="button" id="btnPesquisar" class="btn-acao btn-pesquisar">Pesquisar</button>
+                <button type="button" id="btnLimparPesquisa" class="btn-acao btn-limpar">Limpar</button>
+            </div>
+
+            <ul id="listaCadastrados" class="lista-cadastrados">
+                <!-- Preenchido via JavaScript -->
+            </ul>
+
+            <button type="button" id="btnExcluirTodos" class="btn-acao btn-excluir-todos">Excluir Todos os Registros</button>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 TechDelas. Todos os direitos reservados.</p>
+            <div class="curriculos-integrantes">
+                <span>Currículos da Equipe:</span>
+                <a href="cvj/cvj.html" target="_blank">Júlia Marques</a> |
+                <a href="cvl/cvl.html" target="_blank">Lívia Cardoso</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lógica JavaScript para Local Storage, DOM e Funcionalidades Exigidas -->
+    <script>
+        const STORAGE_KEY = 'techdelas_usuarios_p2';
+
+        const inputNome = document.getElementById('nomeAdm');
+        const inputEmail = document.getElementById('emailAdm');
+        const btnCadastrar = document.getElementById('btnCadastrar');
+        const btnLimpar = document.getElementById('btnLimpar');
+        const inputPesquisa = document.getElementById('inputPesquisa');
+        const btnPesquisar = document.getElementById('btnPesquisar');
+        const btnLimparPesquisa = document.getElementById('btnLimparPesquisa');
+        const listaCadastrados = document.getElementById('listaCadastrados');
+        const btnExcluirTodos = document.getElementById('btnExcluirTodos');
+
+        // Carregar dados ao iniciar a página
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarLista();
+        });
+
+        // 1. Função para incluir dados na lista e no Local Storage (Chave única, objetos JSON)
+        btnCadastrar.addEventListener('click', () => {
+            const nome = inputNome.value.trim();
+            const email = inputEmail.value.trim();
+
+            if (!nome || !email) {
+                alert('Por favor, preencha o nome e o e-mail.');
+                return;
+            }
+
+            const dataEnvio = new Date().toLocaleString('pt-BR');
+            const novoUsuario = {
+                data: dataEnvio,
+                nome: nome,
+                email: email
+            };
+
+            let usuarios = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            usuarios.push(novoUsuario);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(usuarios));
+
+            limparFormulario();
+            renderizarLista();
+        });
+
+        // 5. Função para limpar os campos do formulário
+        function limparFormulario() {
+            inputNome.value = '';
+            inputEmail.value = '';
+            inputNome.focus();
+        }
+        btnLimpar.addEventListener('click', limparFormulario);
+
+        // Renderizar lista (com suporte a pesquisa/filtro)
+        function renderizarLista(termoFiltro = '') {
+            listaCadastrados.innerHTML = '';
+            let usuarios = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+            // 4. Função de pesquisa dos itens da lista
+            const termo = termoFiltro.toLowerCase();
+            const usuariosFiltrados = usuarios.filter(user => 
+                user.nome.toLowerCase().includes(termo) || 
+                user.email.toLowerCase().includes(termo)
+            );
+
+            if (usuariosFiltrados.length === 0) {
+                listaCadastrados.innerHTML = '<li class="sem-registros">Nenhum registro encontrado.</li>';
+                return;
+            }
+
+            usuariosFiltrados.forEach((user) => {
+                const realIndex = usuarios.findIndex(u => u.data === user.data && u.email === user.email);
+
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div>
+                        <strong>${user.nome}</strong> (${user.email})<br>
+                        <small class="data-envio">Enviado em: ${user.data}</small>
+                    </div>
+                    <button class="btn-excluir-item" onclick="excluirItem(${realIndex})">Excluir</button>
+                `;
+                listaCadastrados.appendChild(li);
+            });
+        }
+
+        // Ação do botão Pesquisar
+        btnPesquisar.addEventListener('click', () => {
+            renderizarLista(inputPesquisa.value);
+        });
+
+        // Ação do botão Limpar Pesquisa
+        btnLimparPesquisa.addEventListener('click', () => {
+            inputPesquisa.value = '';
+            renderizarLista();
+        });
+
+        // Permitir pesquisar ao pressionar Enter no input
+        inputPesquisa.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                renderizarLista(inputPesquisa.value);
+            }
+        });
+
+        // 2. Função para excluir um item específico da lista e do Local Storage (com confirmação)
+        window.excluirItem = function(index) {
+            let usuarios = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            if (confirm(`Deseja realmente excluir o usuário "${usuarios[index].nome}"?`)) {
+                usuarios.splice(index, 1);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(usuarios));
+                renderizarLista(inputPesquisa.value);
+            }
+        };
+
+        // 3. Função para excluir todos os itens da lista e do Local Storage (com confirmação)
+        btnExcluirTodos.addEventListener('click', () => {
+            let usuarios = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            if (usuarios.length === 0) {
+                alert('A lista já está vazia.');
+                return;
+            }
+
+            if (confirm('Tem certeza que deseja excluir TODOS os registros cadastrados?')) {
+                localStorage.removeItem(STORAGE_KEY);
+                renderizarLista();
+                inputPesquisa.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
