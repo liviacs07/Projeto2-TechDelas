@@ -1,0 +1,80 @@
+body {
+  background-color: #fccfe2;
+  color: #24080e;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 20px;
+}
+
+section {
+  background-color: #ffffff;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+}
+
+
+#nome-principal {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2.2em;
+  color: #7a1027;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.destaque-texto {
+  font-style: italic; 
+  font-weight: bold; 
+  color: #7a1027;
+}
+
+a[href*="linkedin"] {
+  font-weight: bold;
+}
+
+a:hover {
+  color: #7a1027;
+  text-decoration: underline;
+}
+
+
+a {
+  color: #dd1367;
+  text-decoration: none;
+}
+
+
+h2 {
+  color: #ffffff;
+  background-color: #dd1367;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-family: 'Roboto', sans-serif;
+}
+
+h3 {
+  color: #cf1940;
+  margin-top: 10px;
+}
+
+figure {
+  text-align: center;
+  margin: 15px 0;
+}
+
+figcaption {
+  font-style: oblique;
+  font-size: 0.9em;
+  color: #555555;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.9em;
+  color: #666666;
+  margin-top: 30px;
+}
